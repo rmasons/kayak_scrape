@@ -8,6 +8,6 @@ import numpy as np
 def get_flts(url):
     driver = webdriver.Chrome()
     driver.get(url)
-    time.sleep(30)
+    time.sleep(20)
     soup = BS(driver.page_source, 'lxml')
-    return soup.find_all('ol', attrs={'class' : 'hJSA-list'})
+    return soup.find_all('div', attrs={'class' : 'nrc6-inner'})
