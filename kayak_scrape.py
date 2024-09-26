@@ -14,7 +14,7 @@ def get_flts(url) -> list:
 
 def clean_flts(flts_list) -> pd.DataFrame:
     clnd_flts = []
-    for flt in flts_list:
+    for flt in tqdm(flts_list, 'Cleaning Flights..', leave=False):
         spans = flt.findAll('span')
         airlines = flt.find_all('div', attrs={'dir' : 'auto'})
         prices = flt.find_all('div', attrs={'class' : 'f8F1-price-text'})
