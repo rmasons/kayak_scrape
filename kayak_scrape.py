@@ -20,10 +20,9 @@ def clean_flts(flts_list) -> pd.DataFrame:
         prices = flt.find_all('div', attrs={'class' : 'f8F1-price-text'})
         cabins = flt.find_all('div', attrs={'class' : 'DOum-name DOum-mod-ellipsis'})
         href_list = list(set([x['href'] for x in flt.find_all('a', attrs={'class' : 'oVHK-fclink'})]))
-        ob_stops = 0 if spans[6].getText() == 'nonstop' else int(spans[6].getText()[0])
+        ob_stops = 0 if flt.find_all('span', attrs={'class' : 'JWEO-stops-text'})[0].getText() == 'nonstop' else int(flt.find_all('span', attrs={'class' : 'JWEO-stops-text'})[0].getText()[0])
         ob_offset = 0 if ob_stops == 0 else 2
-        rtrn_stops = spans[17 + ob_offset].getText()
-        rtrn_stops = 0 if rtrn_stops == 'nonstop' else int(rtrn_stops[0])
+        rtrn_stops = 0 if flt.find_all('span', attrs={'class' : 'JWEO-stops-text'})[1].getText() == 'nonstop' else int(flt.find_all('span', attrs={'class' : 'JWEO-stops-text'})[1].getText()[0])
         rtrn_offset = ob_offset + 0 if rtrn_stops == 0 else ob_offset + 2
         if ob_stops > 1 or rtrn_stops > 1: pass
         for cabin in range(0, len(cabins)): 
