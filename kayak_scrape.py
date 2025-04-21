@@ -63,8 +63,8 @@ def clean_ow_flts(flts_list) -> pd.DataFrame:
                 ,'arr_tm' : spans[4].getText()
                 ,'airline' : airlines[0].getText().split(' ')[0]
                 ,'stops' : stops
-                ,'orig_arpt' : spans[7 + offset].getText()
-                ,'dest_arpt' : spans[10 + offset].getText()
+                ,'orig_arpt' : spans[6 + offset].getText()
+                ,'dest_arpt' : spans[9 + offset].getText()
                 ,'cabin' : cabins[cabin].getText()
                 ,'fare' : prices[cabin].getText()
                 ,'bkng_link' : f'https://www.kayak.com{href_list[cabin]}'
