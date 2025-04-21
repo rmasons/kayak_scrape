@@ -1,0 +1,12 @@
+pandas
+numpy
+tqdm
+datetime
+requests
+beautifulsoup4
+ipykernel
+selenium
+beautifulsoup4
+webdriver-manager
+lxml
+IPython
