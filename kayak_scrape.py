@@ -45,3 +45,28 @@ def clean_flts(flts_list) -> pd.DataFrame:
                 ,'bkng_link' : f'https://www.kayak.com{href_list[cabin]}'
             })
     return pd.DataFrame(clnd_flts)
+
+def clean_ow_flts(flts_list) -> pd.DataFrame:
+    clnd_flts = []
+    for flt in tqdm(flts_list, 'Cleaning Flights..', leave=False):
+        spans = flt.findAll('span')
+        airlines = flt.find_all('div', attrs={'dir' : 'auto'})
+        prices = flt.find_all('div', attrs={'class' : 'e2GB-price-text'})
+        cabins = flt.find_all('div', attrs={'class' : 'DOum-name DOum-mod-ellipsis'})
+        href_list = list(set([x['href'] for x in flt.find_all('a', attrs={'class' : 'oVHK-fclink'})]))
+        stops = 0 if flt.find_all('span', attrs={'class' : 'JWEO-stops-text'})[0].getText() == 'nonstop' else int(flt.find_all('span', attrs={'class' : 'JWEO-stops-text'})[0].getText()[0])
+        offset = 0 if stops == 0 else 2
+        if stops > 1: pass
+        for cabin in range(0, len(cabins)): 
+            clnd_flts.append({
+                'dep_tm' : spans[2].getText()
+                ,'arr_tm' : spans[4].getText()
+                ,'airline' : airlines[0].getText().split(' ')[0]
+                ,'stops' : stops
+                ,'orig_arpt' : spans[7 + offset].getText()
+                ,'dest_arpt' : spans[10 + offset].getText()
+                ,'cabin' : cabins[cabin].getText()
+                ,'fare' : prices[cabin].getText()
+                ,'bkng_link' : f'https://www.kayak.com{href_list[cabin]}'
+            })
+    return pd.DataFrame(clnd_flts)
